@@ -104,3 +104,29 @@ describe('Toggle (0,0) through (999,0) should toggle the first line and ignore t
         expect(actualLightStatus).toStrictEqual(expectedLightStatus);
     })
 })
+
+test('Turn off from (499,499) to (500, 500) should switch off the middle four lights', () => {
+    //given
+    const startingLightCoordinates: Coordinates = {colNum: 499, rowNum:499};
+    const endingLightCoordinates: Coordinates = {colNum:500, rowNum:500};
+
+    let baseArray: boolean[][] = Array(ROWS_NUMBER).fill(Array(COLUMNS_NUMBER).fill(Math.random() < 0.5));
+    const lights: GridOfLights = new GridOfLights();
+    let expectedLightStatus:boolean[][] = Array(ROWS_NUMBER).fill(Array(COLUMNS_NUMBER).fill(true));
+
+    for (let i = 0; i < ROWS_NUMBER; i++) {
+        for (let j = 0; j < COLUMNS_NUMBER; j++) {
+            lights.gridOfLights[i][j] = baseArray[i][j];
+            expectedLightStatus[i][j] = baseArray[i][j];
+        }
+    }
+
+    expectedLightStatus[499][499] = expectedLightStatus [499][500] = expectedLightStatus[500][499] = expectedLightStatus[500][500] = false;
+
+    //when
+    lights.turnOff(startingLightCoordinates.colNum, startingLightCoordinates.rowNum, endingLightCoordinates.colNum, endingLightCoordinates.rowNum);
+    const actualLightStatus: boolean[][] = lights.gridOfLights;
+
+    //then
+    expect(actualLightStatus).toStrictEqual(expectedLightStatus);
+})

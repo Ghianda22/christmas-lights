@@ -14,7 +14,6 @@ const COLUMNS_NUMBER: number = 1000;
 export default class GridOfLights{
     #_gridOfLights: boolean[][] = Array(ROWS_NUMBER).fill(Array(COLUMNS_NUMBER).fill(false));
 
-
     get gridOfLights(): boolean[][] {
         return this.#_gridOfLights;
     }
@@ -27,6 +26,14 @@ export default class GridOfLights{
         for (let i = firstRowIndex; i <= lastRowIndex; i++) {
             for (let j = fisrtColumnIndex; j <= lastColumnIndex; j++) {
                 this.gridOfLights[i][j] = true;
+            }
+        }
+    }
+
+    turnOff(fisrtColumnIndex: number, firstRowIndex: number,  lastColumnIndex: number, lastRowIndex: number) {
+        for (let i = firstRowIndex; i <= lastRowIndex; i++) {
+            for (let j = fisrtColumnIndex; j <= lastColumnIndex; j++) {
+                this.gridOfLights[i][j] = false;
             }
         }
     }
