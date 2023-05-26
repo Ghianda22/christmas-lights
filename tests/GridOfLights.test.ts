@@ -8,24 +8,36 @@
 
 /* the 1000x1000 lights are represented as a two-dimensional boolean array
 * if true the light is on, if false the light is off
+*
+* 0,0   1,0     2,0  ...   999,0
+* 0,1   1,1     2,1  ...   999,1
+* 0,2   1,2     2,2  ...   999,2
+* ...   ...     ...         ...
+* 0,999 1,999   2,999 ...   999,999
 * */
 import GridOfLights from "../src/GridOfLights";
 
-const HORIZONTAL_GRID_SIZE: number = 1000;
-const VERTICAL_GRID_SIZE: number = 1000;
+const ROWS_NUMBER: number = 1000;
+const COLUMNS_NUMBER: number = 1000;
+
+interface Coordinates {
+    colNum: number
+    rowNum: number,
+}
 
 test('Turn on (0,0) through (999,999) should turn on every light', () => {
     //given
     const lights: GridOfLights = new GridOfLights();
-
-    let  expectedLightStatus: boolean[][] = Array(HORIZONTAL_GRID_SIZE).fill(Array(VERTICAL_GRID_SIZE).fill(true));
+    const startingLightCoordinates: Coordinates = {colNum: 0, rowNum:0};
+    const endingLightCoordinates: Coordinates = {colNum:999, rowNum:999};
+    let expectedLightStatus: boolean[][] = Array(ROWS_NUMBER).fill(Array(COLUMNS_NUMBER).fill(true));
 
 
     //when
-    lights.turnOn(0,0, 999, 999);
+    lights.turnOn(startingLightCoordinates.colNum, startingLightCoordinates.rowNum,
+        endingLightCoordinates.colNum,endingLightCoordinates.rowNum);
     const actualLightStatus: boolean[][] = lights.gridOfLights;
 
     //then
     expect(actualLightStatus).toStrictEqual(expectedLightStatus);
 })
-

@@ -23,11 +23,13 @@ export default class GridOfLights{
         this.#_gridOfLights = value;
     }
 
-    turnOn(firstRowIndex,lastRowIndex, fisrtColumnIndex, lastColumnIndex) {
+    turnOn(fisrtColumnIndex: number, firstRowIndex: number,  lastColumnIndex: number, lastRowIndex: number) {
         for (let i = firstRowIndex; i <= lastRowIndex; i++) {
             for (let j = fisrtColumnIndex; j <= lastColumnIndex; j++) {
                 this.gridOfLights[i][j] = true;
             }
         }
     }
+
+
 }
