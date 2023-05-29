@@ -25,6 +25,7 @@ interface Coordinates {
     rowNum: number,
 }
 
+/*
 test('Turn on (0,0) through (999,999) should turn on every light', () => {
     //given
     const lights: GridOfLights = new GridOfLights();
@@ -44,7 +45,7 @@ test('Turn on (0,0) through (999,999) should turn on every light', () => {
 
 describe('Toggle (0,0) through (999,0) should toggle the first line and ignore the rest', () => {
     it.each([
-        /*100 values * 10 rows*/
+        //100 values * 10 rows
         [[true, true, true, true, true, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false,
             true, true, true, true, true, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false,
             true, true, true, true, true, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false,
@@ -130,6 +131,7 @@ test('Turn off from (499,499) to (500, 500) should switch off the middle four li
     //then
     expect(actualLightStatus).toStrictEqual(expectedLightStatus);
 })
+*/
 
 test("Santa's instructions", () => {
     const gridOfLights: GridOfLights = new GridOfLights();
@@ -149,4 +151,71 @@ test("Santa's instructions", () => {
     console.log(numberOfLightsOn);
 
     // gridOfLights.printGrid();
+})
+
+test('Turn on (0,0) through (0,0) should increase the total brightness by 1', () => {
+    //given
+    const lights: GridOfLights = new GridOfLights();
+    const startingLightCoordinates: Coordinates = {colNum: 0, rowNum: 0};
+    const endingLightCoordinates: Coordinates = {colNum: 0, rowNum: 0};
+    let expectedBrightness: number = 1;
+
+
+    //when
+    lights.turnOn(startingLightCoordinates.colNum, startingLightCoordinates.rowNum,
+        endingLightCoordinates.colNum, endingLightCoordinates.rowNum);
+    const actualBrightness: number = lights.brightness;
+
+    //then
+    expect(actualBrightness).toStrictEqual(expectedBrightness);
+})
+test('Toggle (0,0) through (999,999) should increase the total brightness by 2000000', () => {
+    //given
+    const lights: GridOfLights = new GridOfLights();
+    const startingLightCoordinates: Coordinates = {colNum: 0, rowNum: 0};
+    const endingLightCoordinates: Coordinates = {colNum: 999, rowNum: 999};
+    let expectedBrightness: number = 2000000;
+
+
+    //when
+    lights.toggle(startingLightCoordinates.colNum, startingLightCoordinates.rowNum,
+        endingLightCoordinates.colNum, endingLightCoordinates.rowNum);
+    const actualBrightness: number = lights.brightness;
+
+    //then
+    expect(actualBrightness).toStrictEqual(expectedBrightness);
+})
+test('Turn off from (499,499) to (500, 500) should decrease the total brightness by 4', () => {
+    //given
+    const lights: GridOfLights = new GridOfLights();
+    lights.turnOn(0,0,999,999);
+    const startingLightCoordinates: Coordinates = {colNum: 499, rowNum: 499};
+    const endingLightCoordinates: Coordinates = {colNum: 500, rowNum: 500};
+    let expectedBrightness: number = 999996;
+
+
+    //when
+    lights.turnOff(startingLightCoordinates.colNum, startingLightCoordinates.rowNum,
+        endingLightCoordinates.colNum, endingLightCoordinates.rowNum);
+    const actualBrightness: number = lights.brightness;
+
+    //then
+    expect(actualBrightness).toStrictEqual(expectedBrightness);
+})
+test('When all the lights are off, turn off from (499,499) to (500, 500) should leave inaltered the total brightness which is 0', () => {
+    //given
+    const lights: GridOfLights = new GridOfLights();
+    // lights.turnOn(0,0,999,999);
+    const startingLightCoordinates: Coordinates = {colNum: 499, rowNum: 499};
+    const endingLightCoordinates: Coordinates = {colNum: 500, rowNum: 500};
+    let expectedBrightness: number = 0;
+
+
+    //when
+    lights.turnOff(startingLightCoordinates.colNum, startingLightCoordinates.rowNum,
+        endingLightCoordinates.colNum, endingLightCoordinates.rowNum);
+    const actualBrightness: number = lights.brightness;
+
+    //then
+    expect(actualBrightness).toStrictEqual(expectedBrightness);
 })
